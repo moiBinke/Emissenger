@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EMIssenger-ResultatRecherche</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="..static/vendor/bootstrap/css/bootstrap.min.css" th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="..static/css/shop-homepage.css" type="text/css" th:href="@{css/shop-homepage.css}" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark  fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="#">EMIssenger</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li>
+        	<form class="form-inline mr-auto" th:action="@{/resultatRecherche}" method="get">
+		      <div class="md-form my-0">
+		      	<input type="hidden" id= "membre" name="membre" th:value="${session.moi.idMembre}">
+		        <i class="fa fa-search text-white ml-3 btn_primary" aria-hidden="true"></i>
+		        <input class="form-control" type="text" placeholder="chercher" name="motCle" id="motCle" aria-label="Search">
+		        <input class="form-control" type="submit" placeholder="chercher">
+		      </div>
+		    </form>
+          </li>
+             <li class="nav-item ">
+            <a class="nav-link" th:href="@{/filActualites}">Fils d'actualités</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:href="@{/profil}">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/messagerie}">Messagerie</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/journal}"><span class="sr-only">(current)</span>Journal</a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+<div class="container-fluid">
+	 <div class="row" style="padding:2%;background-color:black; heigh:50px">
+	 			<div class="col-md-4" >
+=	        	</div>
+				<div class="col-md-4 text-center" style="margin-top: 2%; padding:2%;" >
+	                  <img th:src="${session.moi.photo}" class="rounded-circle">
+	        	</div>
+	        	<div class="col-md-4">
+	        	</div>
+	 </div>
+	  <div class="row" style="background-color:#555; heigh:50px">
+				<div class="col-md-6 text-center" style="color:white;border-bottom: 5px solid;border-color:#555;margin-bottom:0% ">
+				 <h4> <a th:href="@{journal}" class="notification" style=" color: white;position: relative;">
+  					Mes Publications
+				  </a>
+				</h4>
+				</div>
+				<div class="col-md-6 text-center" style="color:white;border-bottom: 5px solid;border-color:indigo;margin-bottom:0% ">
+				 <h4> <a th:href="@{journal2}" class="notification" style=" color: white;position: relative;">
+  					Amis<span> <i class="fa fa-bell fa-fw"></i></span>
+  					<span class="badge" style=" position: absolute;top: -10px;right: -10px;padding: 5px 10px;border-radius: 50%;background-color: red;color: white;"></span>
+					
+				  </a>
+				</h4>
+				</div>
+ 	 </div>	
+ 	 
+ 	 <div class="row">
+ 	 <!-- Mes amis  -->
+ 	 	<table class="table striped">
+ 			<tr th:each="ami:${amisAcceptes}">
+                <td><img th:src="${ami.photo}" class="rounded-circle"></td>
+				<td><span th:text="${ami.username}"></span><br/><span th:text="${ami.departement}"></span></td>
+				<td><span th:text="${ami.description}"></span><br/><span th:text="${ami.email}"></span></td>
+ 				<td><button  type="submit" class="btn btn-primary" name="demande" value="Connecter"><i class="fa fa-check"></i> Ami</button></td>
+ 			</tr>
+ 	    </table>
+ 	    <!-- Ceux qui m'ont demandé amitié  -->
+ 	    <table class="table striped">
+ 			<tr th:each="ami:${amisDemandes}">
+                <td><img th:src="${ami.photo}" class="rounded-circle"></td>
+				<td><span th:text="${ami.username}"></span><br/><span th:text="${ami.departement}"></span></td>
+				<td><span th:text="${ami.description}"></span><br/><span th:text="${ami.email}"></span></td>
+ 				<td>
+ 						<!-- Accepter ou refuser -->
+	 				<form th:action="@{/ajouterAmi}" method="post">
+	 					<input  type="hidden" th:value="${session.moi.idMembre}" name="idDemandeurEnChaine">
+	 					<input  type="hidden" th:value="${ami.idMembre}" name="idCibleEnChaine">
+						<button  type="submit" class="btn btn-primary" name="demande" value="AccepterInvitation">Accepter Invitation</button>
+						<button  type="submit" class="btn btn-primary" name="demande" value="RefuserInvitation">Refuser Invitation</button>
+		 			</form>
+ 				</td>
+ 			</tr>
+ 	    </table>
+ 	 	
+ 	 </div> 
+</div>
+
+  </div>
+   <!-- /.container -->
+  <!-- Footer -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EMIssenger-profil</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link  th:href="@{css/shop-homepage.css}" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark  fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="#">EMIssenger</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li>
+        	<form class="form-inline mr-auto" th:action="@{/resultatRecherche}" method="get">
+		      <div class="md-form my-0">
+		      	<input type="hidden" id= "membre" name="membre" th:value="${session.moi.idMembre}">
+		        <i class="fa fa-search text-white ml-3 btn_primary" aria-hidden="true"></i>
+		        <input class="form-control" type="text" placeholder="chercher" name="motCle" id="motCle" aria-label="Search">
+		        <input class="form-control" type="submit" placeholder="chercher">
+		      </div>
+		    </form>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:href="@{/filActualites}">Fils d'actualités</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/profil}"><span class="sr-only">(current)</span>Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/messagerie}">Messagerie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/journal}">Journal</a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+  <div class="container-fluid">
+
+    <div class="row" style="padding:2%;background-color:black;">
+		<div class="col-md-3" style="color: red;">
+			<div class="col-sm-6 " style="margin-top: 2%; padding:2%;" >
+                  <img th:src="${session.moi.photo}" class="rounded-circle">
+        	</div> 
+
+      	</div>
+		<div class="col-md-3" style="color:white;">
+			<div><span th:text="${session.moi.description}"></span></div>
+		</div>
+		<div class="col-md-3" style="color:white;">
+			<div><i class="fa fa-user"></i> <span th:text="${session.moi.username}"></span></div>
+			<br>
+			<div><i class="fa fa-envelope"></i> <span th:text="${session.moi.email}"></span></div>
+		</div>
+		<div class="col-md-3" style="color:white;">
+			<div><i class="fa fa-map-marker"></i></i> <span >Rabat, Agdal</span></div>
+			<br>
+			<div><i class="fa fa-graduation-cap"></i> <span th:text="${session.moi.departement}"></span></div>
+		</div>
+    </div>
+    <!-- /.row -->
+
+	<div class="row" style="padding:2%; margin-top:3%">
+		<div class="md-col-6">
+			<form th:action="@{modifierUsername}" method="post">
+				<input type="hidden" name="email" th:value="${session.moi.email}">
+				<input type="hidden" name="motDePasse" th:value="${session.moi.motDePasse}">
+				<div style="margin-bottom:10%">
+					<label for="username">nom d'utilisatteur:</label>
+					<div>
+						<input type="text" th:placeholder="${session.moi.username}" class="text" id="username" name="username"/>
+						<input  type="submit" value="modifier">
+					</div>
+				</div>
+			</form>
+			<form th:action="@{modifierPromotion}" method="post">
+				<input type="hidden" name="email" th:value="${session.moi.email}">
+				<input type="hidden" name="motDePasse" th:value="${session.moi.motDePasse}">
+				<div style="margin-bottom:10%">
+					<label for="promotion">Promotion:</label>
+					<input type="date" id="promotion" name="promotion"/>
+					<div>
+						<input type="text" th:placeholder="${session.moi.promotion}" class="text" /><input  type="submit" value="modifier">
+					</div>
+				</div>
+			</form>
+			<form th:action="@{modifierEmail}" method="post">
+				<input type="hidden" name="email" th:value="${session.moi.email}">
+				<input type="hidden" name="motDePasse" th:value="${session.moi.motDePasse}">
+				<div style="margin-bottom:10%">
+					<label for="email">Email:</label>
+					<div>
+					<input type="text" th:placeholder="${session.moi.email}" class="text"id="nouveauEmail" name="nouveauEmail"/><input type="submit" value="modifier">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="md-col-4" style="margin-left:20%">
+			<form th:action="@{modifierDescription}" method="post">
+				<input type="hidden" name="email" th:value="${session.moi.email}">
+				<input type="hidden" name="motDePasse" th:value="${session.moi.motDePasse}">
+				<div style="margin-bottom:10%">
+					<label for="nouveauDescription">Description:</label>
+					<div>
+					<textarea cols="50" rows="7" id="nouveauDescription" name="nouveauDescription" th:placeholder="${session.moi.description}"></textarea>
+					<div >
+						<input type="submit" class="btn btn-primary" value="modifier">
+					</div>
+					</div>
+				</div>
+			</form>
+		</div>
+    </div>
+  </div>
+  <!-- /.container -->
+
+  <!-- Footer -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

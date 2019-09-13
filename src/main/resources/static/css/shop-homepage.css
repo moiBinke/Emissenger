@@ -1,0 +1,17 @@
+/*!
+ * Start Bootstrap - Shop Homepage (https://startbootstrap.com/template-overviews/shop-homepage)
+ * Copyright 2013-2019 Start Bootstrap
+ * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
+ */
+ 
+
+body {
+  padding-top: 56px;
+}
+nav{
+	background-color: indigo;
+}
+/*on personnalise le label de input="file" comme on veut*/
+/* pour les icone de notifications */
+
+

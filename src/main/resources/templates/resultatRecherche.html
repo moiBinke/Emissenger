@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EMIssenger-profil</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link  th:href="@{css/shop-homepage.css}" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark  fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="#">EMIssenger</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li>
+        	<form class="form-inline mr-auto" th:action="@{/resultatRecherche}" method="get">
+		      <div class="md-form my-0">
+		      	<input type="hidden" id= "membre" name="membre" th:value="${session.moi.idMembre}">
+		        <i class="fa fa-search text-white ml-3 btn_primary" aria-hidden="true"></i>
+		        <input class="form-control" type="text" placeholder="chercher" name="motCle" id="motCle" aria-label="Search">
+		        <input class="form-control" type="submit" placeholder="chercher">
+		      </div>
+		    </form>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:href="@{/filActualites}">Fils d'actualités</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/profil}"><span class="sr-only">(current)</span>Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/messagerie}">Messagerie</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/journal}">Journal</a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </nav>
+  <!-- Page Content -->
+  <div class="container-fluid">
+ 		<table class="table striped">
+ 			<tr th:each="resultat:${listeRecherche}">
+			
+                <td><img th:src="${resultat.membre.photo}" class="rounded-circle"></td>
+				<td><span th:text="${resultat.membre.username}"></span><br/><span th:text="${resultat.membre.departement}"></span></td>
+				<td><span th:text="${resultat.membre.description}"></span><br/><span th:text="${resultat.membre.email}"></span></td>
+ 				<td> 
+ 					<!-- On doit pas afficher ajouter quand le resultatest un ami -->
+	 				<form th:action="@{/ajouterAmi}" method="post">
+	 					<input  type="hidden" th:value="${resultat.IdDemandeur}" name="idDemandeurEnChaine">
+	 					<input  type="hidden" th:value="${resultat.IdCible}" name="idCibleEnChaine">
+							
+	 						<th:block th:switch="${resultat.etat}">			
+								<div th:case="'Envoi'">
+									<button  type="submit" class="btn btn-primary" name="demande" value="AnnulerInvitation">Annuler invitation</button>
+								</div>
+								<div th:case="'Amis'">
+									<button  type="submit" class="btn btn-primary" name="demande" value="Connecter"><i class="fa fa-check"></i> Ami</button>
+								</div>
+								<div th:case="'Recu'">
+									<button  type="submit" class="btn btn-primary" name="demande" value="AccepterInvitation">Accepter Invitation</button>
+									<button  type="submit" class="btn btn-primary" name="demande" value="RefuserInvitation">Refuser Invitation</button>
+								</div>
+								<div th:case="'Null'">
+			 						<button  type="submit" class="btn btn-primary" name="demande" value="AjouterInvitation">Ajouter</button>
+			 					</div>
+	 						</th:block>
+	 					
+		 			</form>
+	 			</td>
+ 			</tr>
+ 	    </table>
+  </div>
+   <!-- /.container -->
+  <!-- Footer -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

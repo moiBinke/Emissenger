@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    
+  <meta name="description" content="Reseau EMI"/>
+  <meta name="EIOR" content="Reseaux EMI"/>
+
+  <title>
+    journal-EMIssenger
+  </title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="..static/css/mainActualite.css" th:href="@{css/mainActualite.css}" >
+
+</head>
+
+<body >
+
+<nav class="navbar navbar-inverse navbar-global navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="col-md-6">
+          <a class="navbar-brand" href="#"><h2>EMIssenger</h2></a>
+        </div>
+      </div>
+</nav>
+<nav class="navbar-primary">
+  <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+   <div class=" text-center" style="margin:5%"  >
+                  <img src="https://www.gravatar.com/avatar/cd07c3be7fd289c50893743a379c10a3" class="rounded-circle">
+   </div>
+  <ul class="navbar-primary-menu">
+    <li>
+      <a href="#"><span class="nav-label"><i class="fa fa-globe"></i> Fils d'Actualit�s</span></a>
+                    <a href="profil.jsp"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Profile</span></a>
+                    <a href="parametres.jsp" ><i class="fa fa-cogs"></i><span class="nav-label"> Param�tres</span></a>
+                    <a href="#"><i class="fa fa-bell"></i><span class="nav-label"> Notifications</span></a>
+                    <a href="journal.jsp" style="background-color: black"><i class="fa fa-flag"></i><span class="nav-label"> Journal</span></a>
+    </li>
+  </ul>
+</nav>
+<div class="main-content">
+<div class="container">
+     <div class="row">
+       <div class="col-md-8">
+          <div class="card card-primary">
+            <div class="card-header" style="background-color: indigo; color: white">
+             <h3 class="card-title" >BinkeIssa</h3>
+            </div>
+
+            <form action="ServletCommentaire" method="post">
+              <div class="card-block">
+                  <input type="text" class="form-control" style="border:none;" placeholder="Exprimez-vous..." name="">
+                  <textarea  style="resize:vertical; border-radius:0px; border: none" class="form-control"  rows="4" name="commentaire" required>
+                   
+                  </textarea>
+                
+              </div>
+              <div class="card-header bg-dark text-right" style="color: white;height:5%;" >
+                <label for="files" class="label-file"><button class="btn btn-primary"><i class="fa fa-paperclip" aria-hidden="true"></i></button></label>
+                <input type="file" class="input-file" id="files" style="  " >&nbsp &nbsp  &nbsp 
+                <button class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+              </div>
+              </form>
+        </div>
+       </div>
+     </div>
+  </div>
+  <div class="container">
+    <div class="row" style="margin-top:50px ">
+      <div class="col-md-2">
+        <div class=" text-center">
+                  <img src="https://www.gravatar.com/avatar/cd07c3be7fd289c50893743a379c10a3" class="rounded-circle">
+        </div>
+        <div class="text-center" style="font-style:italic ">
+          BinkeIssa<br>
+          <time class="pull-right">
+              <i class="fa fa-calendar"></i> 04/02/2019 <br>  
+              <i class="fa fa-clock-o"></i>1:35
+          </time>
+        </div>
+      </div>
+ <div class="col-md-10">
+   <section class="container" id="commentaire">
+        <section class="row clearfix" >
+          
+        </section>
+        <section class="row clearfix">
+          <section class="col-md-12 column">
+                
+         <div class="row clearfix">
+          <div class="col-md-12 column">
+            <div class="panel panel-default">
+              <section class="row panel-body">
+                <section class="col-md-9">
+                  <h2> <i class="fa fa-smile-o"></i> des Infos sur le stage</h2>
+                  <p>Bonjour,<br>
+                    Je vous rappelle que vous devez chercher activement votre stage d'�t�.
+                    Cette semaine essayez de profiter du Forum pour d�poser vos demandes de stages mais aussi lors des vacances prochaines.
+                    Ci-joint une demande type que vous pouvez utiliser en la compl�tant par l'organisme,  votre nom et  votre niveau puis la faire cacheter par l'administration du d�partement.
+                    Essayez de cibler plusieurs organismes  (plusieurs demandes). <br>
+
+                    Bonne chance </p>
+                </section>       
+              </section>
+              <div class="panel-footer text-center">
+                <div class="card card-body bg-light">
+                   <section class="col-md-2 ">
+                      <i class="fa fa-thumbs-up "></i><a href="#" style="color:white" > Merci </a>
+                   </section>
+                   <section id="thanks" class="col-md-6">
+                      <small><a href="#" data-toggle="tooltip" style="color:white" >  J'<i class="fa fa-heart "></i>ime</a> </small><br>
+                            
+                    </section>
+                      <section class="col-md-4">
+                            <i class="fa fa-mail-reply "></i><a href="#" style="color:white"> R�pondre </a>
+                      </section>
+       			 </div>
+              </div>
+      </div>
+    </div>
+  </div>
+          
+          
+          
+    </section>
+  </section>
+</section>
+
+</div>
+</div>
+  </div>
+  </div>
+</body>
+</html>

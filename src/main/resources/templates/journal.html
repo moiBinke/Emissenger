@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>EMIssenger-ResultatRecherche</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="..static/vendor/bootstrap/css/bootstrap.min.css" th:href="@{vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="..static/css/shop-homepage.css" th:href="@{css/shop-homepage.css}" rel="stylesheet">
+
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+</head>
+
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark  fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="#">EMIssenger</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li>
+        	<form class="form-inline mr-auto" th:action="@{/resultatRecherche}" method="get">
+		      <div class="md-form my-0">
+		      	<input type="hidden" id= "membre" name="membre" th:value="${session.moi.idMembre}">
+		        <i class="fa fa-search text-white ml-3 btn_primary" aria-hidden="true"></i>
+		        <input class="form-control" type="text" placeholder="chercher" name="motCle" id="motCle" aria-label="Search">
+		        <input class="form-control" type="submit" placeholder="chercher">
+		      </div>
+		    </form>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:href="@{/filActualites}">Fils d'actualités</a>
+          </li>
+          <li class="nav-item ">
+            <a class="nav-link" th:href="@{/profil}">Profil</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" th:href="@{/messagerie}">Messagerie</a>
+          </li>
+          <li class="nav-item active">
+            <a class="nav-link" th:href="@{/journal}"><span class="sr-only">(current)</span>Journal</a>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </nav>
+
+  <!-- Page Content -->
+<div class="container-fluid">
+	 <div class="row" style="padding:2%;background-color:black; heigh:50px">
+	 			<div class="col-md-4" >
+=	        	</div>
+				<div class="col-md-4 text-center" style="margin-top: 2%; padding:2%;" >
+	                  <img th:src="${session.moi.photo}" class="rounded-circle">
+	        	</div>
+	        	<div class="col-md-4">
+	        	</div>
+	 </div>
+	  <div class="row" style="background-color:#555; heigh:50px">
+				<div class="col-md-6 text-center" style="color:white;border-bottom: 5px solid; border-color:indigo;margin-bottom:0% ">
+				 <h4> <a th:href="@{journal}" class="notification" style=" color: white;position: relative;">
+  					Mes Publications
+				  </a>
+				</h4>
+				</div>
+				<div class="col-md-6 text-center" style="color:white;border-bottom: 5px solid;border-color:#555;margin-bottom:0% ">
+				 <h4> <a th:href="@{journal2}" class="notification" style=" color: white;position: relative;">
+  					Amis<span> <i class="fa fa-bell fa-fw"></i></span>
+  					<span class="badge" style=" position: absolute;top: -10px;right: -10px;padding: 5px 10px;border-radius: 50%;background-color: red;color: white;" th:text="${nombreAmitieDemande}"></span>
+					
+				  </a>
+				</h4>
+				</div>
+ 	 </div>	 
+</div>
+<!-- début -->
+  <div class="container-fluid">
+ 		  <div class="container" th:each="maPublication: ${session.mesPublications}">
+    <div class="row" style="margin-top:50px ">
+      <div class="col-md-2">
+        <div class=" text-center">
+                  <img th:src="${maPublication.userPicture}"  class="rounded-circle"/>
+        </div>
+        <div class="text-center" style="font-style:italic ">
+         <span th:text="${maPublication.username}"></span><br>
+          <time class="pull-right">
+              <i class="fa fa-calendar"></i><span th:text="${maPublication.datePublication}"></span> <br> 
+          </time>
+          <form th:action="@{supprimerPublication}" method="post">
+          		<input type="hidden" th:value="${maPublication.idPublication}" name="idPubASupprimerEnChaine">
+             <button type="submit" style="color:red;">Supprimer</button>
+          </form> 
+          
+        </div>
+      </div>
+ <div class="col-md-10">
+   <section class="container" id="commentaire">
+        <section class="row clearfix" >
+          
+        </section>
+        <section class="row clearfix">
+          <section class="col-md-12 column">
+                
+         <div class="row clearfix">
+          <div class="col-md-12 column">
+            <div class="panel panel-default">
+              <section class="row panel-body">
+                <section class="col-md-9">
+                  <h2> <i class="fa fa-smile-o th:text=" th:text="${maPublication.objet}"></i></h2>
+               		<p th:text="${maPublication.contenu}"></p>
+                </section>       
+              </section>
+              <div class="panel-footer text-center">
+                <div class="card card-body bg-light">
+                  <div class="row">
+                  	 <section class="col-md-4">
+                      <i class="fa fa-thumbs-up "></i><a href="#" style="color:indigo" >Merci </a>
+                   </section>
+                   <section id="thanks" class="col-md-4">
+                      <small><a href="#" data-toggle="tooltip" style="color:indigo" >J'<i class="fa fa-heart "></i>ime</a> </small><br>
+                            
+                    </section>
+                      <section class="col-md-4">
+                            <i class="fa fa-mail-reply "></i><a href="#" style="color:indigo"> R�pondre </a>
+                      </section>
+                  </div>
+       			 </div>
+              </div>
+      </div>
+    </div>
+  </div>
+          
+          
+          
+    </section>
+  </section>
+</section>
+
+</div>
+</div>
+  </div>
+  <!-- fin  -->
+  </div>
+   <!-- /.container -->
+  <!-- Footer -->
+
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

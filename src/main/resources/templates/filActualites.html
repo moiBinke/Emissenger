@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    
+  <meta name="description" content="Reseau EMI"/>
+  <meta name="EIOR" content="Reseaux EMI"/>
+
+  <title>
+    journal-EMIssenger
+  </title>
+
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="..static/css/mainActualite.css" th:href="@{css/mainActualite.css}" >
+
+</head>
+
+<body >
+
+<nav class="navbar navbar-inverse navbar-global navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="col-md-6">
+          <a class="navbar-brand" href="#"><h2>EMIssenger</h2></a>
+        </div>
+         <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+          <li>
+        	<form class="form-inline mr-auto" th:action="@{resultatRecherche}" method="get">
+		      <div class="md-form my-0">
+		      	
+		        <i class="fa fa-search text-white ml-3 btn_primary" aria-hidden="true"></i>
+		        <input class="form-control" type="text" placeholder="chercher" name="motCle" id="motCle" aria-label="Search">
+		        <input class="form-control" type="submit" placeholder="chercher">
+		      </div>
+		    </form>
+          </li>
+          </ul>
+          </div>
+      </div>
+</nav>
+<nav class="navbar-primary">
+  <a href="#" class="btn-expand-collapse"><span class="glyphicon glyphicon-menu-left"></span></a>
+   <div class=" text-center" style="margin:5%"  >
+		<img th:src="${session.moi.photo}" class="rounded-circle" />
+   </div>
+  <ul class="navbar-primary-menu">
+    <li>
+      <a th:href="@{/filActualites}" style="background-color: black"><span class="nav-label"><i class="fa fa-globe"></i> Fils d'Actualités</span></a>
+      <a th:href="@{/profil}"><span class="glyphicon glyphicon-envelope"></span><span class="nav-label">Profil</span></a>
+      <a th:href="@{/journal}" ><i class="fa fa-flag"></i><span class="nav-label"> Journal</span></a>
+    </li>
+  </ul>
+</nav>
+<div class="main-content">
+<div class="container">
+     <div class="row">
+       <div class="col-md-8">
+          <div class="card card-primary">
+            <div class="card-header" style="background-color: indigo; color: white">
+            	<h5><img th:src="${session.moi.photo}" style="width:1%px;heigh:1%" class="rounded-circle"/>
+            	<span th:text="${session.moi.username}"></span></h5>
+            </div>
+
+            <form th:action="@{/publier}" method="post">
+              <div class="card-block">
+                  <input type="text" class="form-control" style="border:none;" placeholder="Exprimez l'objet du post" name="objet" autocomplete="off">
+                  <textarea  style="resize:vertical; border-radius:0px; border: none" class="form-control"  rows="4" placeholder="Exprimez-vous..." name="contenu" autocomplete="off" required></textarea>
+                
+              </div>
+              <div class="card-header bg-dark text-right" style="color: white;height:5%;" >
+                <label for="files" class="label-file">
+	                <!-- <button class="input-file" type="file" id="files" name="piece"><i class="fa fa-paperclip" aria-hidden="true"></i>
+	                </button>  -->
+                </label>
+                <button type="file"  class="btn btn-primary" name="piece"><i class="fa fa-paperclip" aria-hidden="true"></i></button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
+              </div>
+             </form>
+        </div>
+       </div>
+     </div>
+  </div>
+  
+  <div class="container" th:each="actualite: ${actualites}">
+    <div class="row" style="margin-top:50px ">
+      <div class="col-md-2">
+        <div class=" text-center">
+                  <img th:src="${actualite.userPicture}"  class="rounded-circle"/>
+        </div>
+        <div class="text-center" style="font-style:italic ">
+         <span th:text="${actualite.username}"></span><br>
+          <time class="pull-right">
+              <i class="fa fa-calendar"></i><span th:text="${actualite.datePublication}"></span> <br>  
+          </time>
+        </div>
+      </div>
+ <div class="col-md-10">
+   <section class="container" id="commentaire">
+        <section class="row clearfix" >
+          
+        </section>
+        <section class="row clearfix">
+          <section class="col-md-12 column">
+                
+         <div class="row clearfix">
+          <div class="col-md-12 column">
+            <div class="panel panel-default">
+              <section class="row panel-body">
+                <section class="col-md-9">
+                  <h2> <i class="fa fa-smile-o" th:text="${actualite.objet}"></i></h2>
+               		<p th:text="${actualite.contenu}"></p>
+                </section>       
+              </section>
+              <div class="panel-footer text-center">
+                <div class="card card-body bg-light">
+                  <div class="row">
+                  	 <section class="col-md-4">
+                     <!--  <i class="fa fa-thumbs-up "></i><a href="#" style="color:indigo" >Merci </a> -->
+                      <a th:href="@{'http://localhost:8080/merci?idpub='+${actualite.idPublication}}" > <i class="fa fa-eye" aria-hidden="true" th:text="${actualite.merci}"></i>  </a>
+                   </section>
+                   <section id="thanks" class="col-md-4">
+                     <!--  <small>
+                      <a href="#" data-toggle="tooltip" style="color:indigo" >
+                      J'<i class="fa fa-heart "></i>ime</a>
+                       </small><br> -->
+                           <a th:href="@{'http://localhost:8080/aime?idpub='+${actualite.idPublication}}" > <i class="fa fa-thumbs-o-up" aria-hidden="true" th:text="${actualite.aime}"></i>  </a>
+                    </section>
+                    <section class="col-md-4">
+                            <a th:href="@{'http://localhost:8080/com?idpub='+${actualite.idPublication}}" > <i class="fa fa-thumbs-o-up" aria-hidden="true" th:text="${actualite.aime}"></i>  </a>
+                    </section>
+                  </div>
+       			 </div>
+              </div>
+      </div>
+    </div>
+  </div>
+    </section>
+  </section>
+</section>
+
+</div>
+</div>
+  </div>
+  </div>
+</body>
+</html>
